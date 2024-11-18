@@ -1,0 +1,6 @@
+npx create-react-app fisico
+npm install axios
+npm install react-router-dom
+npm install recharts
+npm install msw@0.49.0 --save-dev
+npm install react-toastify

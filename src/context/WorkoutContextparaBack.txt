@@ -1,0 +1,40 @@
+import React, { createContext, useState, useEffect } from 'react';
+import api from '../Services/api';  // Importamos Axios para la conexión al backend
+
+export const WorkoutContext = createContext();
+
+export const WorkoutProvider = ({ children }) => {
+  const [workouts, setWorkouts] = useState([]);  // Para manejar los entrenamientos
+  const [schedule, setSchedule] = useState({    // Para manejar la rutina programada
+    lunes: [],
+    martes: [],
+    miercoles: [],
+    jueves: [],
+    viernes: [],
+    sabado: [],
+    domingo: []
+  });
+
+  // Cargar entrenamientos y rutina desde el backend cuando el componente se monta
+  useEffect(() => {
+    const fetchWorkoutsAndSchedule = async () => {
+      try {
+        const workoutResponse = await api.get('/Workouts');
+        setWorkouts(workoutResponse.data);  // Cargar entrenamientos
+
+        const scheduleResponse = await api.get('/WorkoutSchedule');
+        setSchedule(scheduleResponse.data.schedule);  // Cargar rutina
+      } catch (error) {
+        console.error('Error al cargar los datos del backend:', error);
+      }
+    };
+
+    fetchWorkoutsAndSchedule();
+  }, []);
+
+  return (
+    <WorkoutContext.Provider value={{ workouts, setWorkouts, schedule, setSchedule }}>
+      {children}
+    </WorkoutContext.Provider>
+  );
+};

@@ -1,0 +1,26 @@
+import React, { useState, useEffect } from 'react';
+import ProgressChart from '../components/Progress/ProgressChart';
+
+function UserProgress() {
+  const [progressData, setProgressData] = useState([]);
+
+  useEffect(() => {
+    // Simulamos datos de progreso (en una implementación real, vendrían de una API)
+    const mockData = [
+      { date: '2024-11-01', weight: 50 },
+      { date: '2024-11-05', weight: 55 },
+      { date: '2024-11-10', weight: 60 }
+    ];
+
+    setProgressData(mockData);
+  }, []);
+
+  return (
+    <div>
+      <h1>Progreso del Usuario</h1>
+      <ProgressChart data={progressData} />
+    </div>
+  );
+}
+
+export default UserProgress;
